@@ -1,0 +1,6 @@
+temp*
+.idea
+.ipynb_checkpoints
+vk_config.*
+music/*
+config.json
