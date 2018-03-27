@@ -17,7 +17,6 @@ cookies = vk_session.http.cookies.get_dict()
 
 #extract user_id
 user_id = cookies['l']
-
 # cookies to string
 s = '"'
 for v in cookies:
@@ -58,13 +57,21 @@ while i < len(music_data_raw):
 	i += 3
 
 # filter empty or wrong elements
-music_data = list(filter(lambda x: x[2][:5] == "https", music_data))
+music_data = list(filter(lambda x: x[2][:5] == "https", music_data))  
 
 # Download and save music data
 os.makedirs("music", exist_ok=True)
 for elem in music_data:
 	r = requests.get(elem[2])
-	filename = "".join([x if x.isalnum() else "_" for x in "{} - {}".format(elem[0], elem[1])])
+	filename = "".join([x if x.isalnum() else "_" for x in "{} - {}".format(elem[0], elem[1])[:50]])
+
+
+	if os.path.isfile("music/" + filename + ".mp3"):
+		index = 0
+		while os.path.isfile("music/" +filename + str(index) + ".mp3"):
+			index += 1
+		filename += str(index)
 	filename += ".mp3"
 	with open("music/" + filename, "wb") as f:
 		f.write(r.content)
+
