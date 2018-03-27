@@ -64,7 +64,7 @@ music_data = list(filter(lambda x: x[2][:5] == "https", music_data))
 os.makedirs("music", exist_ok=True)
 for elem in music_data:
 	r = requests.get(elem[2])
-	filename = "".join([x if x.isalnum() else "_" for x in "{} - {}".format(elem[0], elem[1])])
+	filename = "".join([x if x.isalnum() else "_" for x in "{} - {}".format(elem[0], elem[1][:30])])
 	filename += ".mp3"
 	with open("music/" + filename, "wb") as f:
 		f.write(r.content)
